@@ -30,28 +30,26 @@ personSchema.plugin(uniqueValidator)
 const Person = mongoose.model('Person', personSchema)
 
 if(process.argv.length === 3) {
-    console.log('Phonebook:')
-    Person
+  console.log('Phonebook:')
+  Person
     .find({})
     .then(persons => {
-        persons.map(person => console.log(person.name + ' '+person.number))
-        mongoose.connection.close()
+      persons.map(person => console.log(person.name + ' '+person.number))
+      mongoose.connection.close()
     })
-    
 } else {
-    const person = new Person({
-        name: process.argv[3],
-        number: process.argv[4]
-      })
-    person.save()
-    .then(result => {
+  const person = new Person({
+    name: process.argv[3],
+    number: process.argv[4]
+  })
+  person.save()
+    .then(() => {
       console.log(`Added ${person.name} number ${person.number} to phonebook`)
       mongoose.connection.close()
     })
     .catch(error => {
-        console.log(error)
-        mongoose.connection.close()})
-    
+      console.log(error)
+      mongoose.connection.close()})
 }
 
 
